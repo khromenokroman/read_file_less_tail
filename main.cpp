@@ -7,10 +7,11 @@
 #include "file.h"
 #include "system.h"
 
-// пока что есть косяки например надо проверять есть ли файл
+// пока что есть косяки например надо проверять есть ли файл,
 
 int main()
 {
+    log_system_start();
     bool RUN_MAIN = true;                          // основной цикл программы
     bool RUN_PROGRAMM = false;                     // понимать что запушена программа
     std::string PATH_INDATA = "/tmp/indata.txt";   // файл сторонней программы
@@ -91,4 +92,5 @@ int main()
         }
     }
     remove_file(PATH_COUNTER, PATH_OUTDATA); // удалим наши файлы
+    log_system_stop();
 }
