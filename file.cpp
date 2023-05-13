@@ -28,3 +28,13 @@ void create_text_file(const std::string &path_counter, const std::string &path_o
     fout_outdata << "" << std::endl;
     fout_outdata.close();
 }
+
+int get_count_line(const std::string &path_indata) // получим количество строк в файле
+{
+    int count_line = 0;
+    std::string line;
+    std::fstream file(path_indata);
+    while (getline(file, line))
+        ++count_line;
+    return count_line;
+}

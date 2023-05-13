@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <unistd.h>
 
-#include"func.h"
+#include"file.h"
 
 // знаю что так плохо, но мне кажется для этой программы так норм :)
 
@@ -16,15 +16,7 @@ std::string PATH_COUNTER = "/tmp/counter.txt"; ////файл вспомогате
 
 
 
-int get_count_line() // получим количество строк в файле
-{
-    int count_line = 0;
-    std::string line;
-    std::fstream file(PATH_INDATA);
-    while (getline(file, line))
-        ++count_line;
-    return count_line;
-}
+
 
 void start_less() // запустим less
 {
@@ -73,7 +65,7 @@ int main()
     while (RUN_MAIN)
     {
         counter_watch = get_counter_watch(PATH_COUNTER); // получим кол-во просмотренных строк
-        counter_file = get_count_line();     // получим колво строк
+        counter_file = get_count_line(PATH_INDATA);     // получим колво строк
         if (counter_watch != counter_file)
         {
             std::string line;
