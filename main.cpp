@@ -4,9 +4,10 @@
 #include <filesystem>
 #include <unistd.h>
 
-#include"file.h"
+#include "file.h"
+#include "system.h"
 
-//пока что есть косяки например надо проверять есть ли файл, желательно избавиться от глобальных переменных, решаю...
+// пока что есть косяки например надо проверять есть ли файл, желательно избавиться от глобальных переменных, решаю...
 
 // знаю что так плохо, но мне кажется для этой программы так норм :)
 
@@ -16,24 +17,11 @@ std::string PATH_INDATA = "/tmp/indata.txt";   // файл сторонней п
 std::string PATH_OUTDATA = "/tmp/outdata.txt"; ////файл нашей программы
 std::string PATH_COUNTER = "/tmp/counter.txt"; ////файл вспомогательный, хранит число строк от файла стронней программы
 
-
-
-
-
-void start_less() // запустим less
-{
-    std::system("less /tmp/outdata.txt");
-    RUN_MAIN = false;
-}
-
-void start_tail() // запустим tail
-{
-    std::system("tail -f /tmp/outdata.txt");
-    RUN_MAIN = false;
-}
-
 int main()
 {
+    namespace fs = std::filesystem;
+    fs::remove(PATH_OUTDATA);
+    fs::remove(PATH_COUNTER);
     create_text_file(PATH_COUNTER, PATH_OUTDATA);
     int counter_watch, counter_file;
     char user_answer;
@@ -67,7 +55,7 @@ int main()
     while (RUN_MAIN)
     {
         counter_watch = get_counter_watch(PATH_COUNTER); // получим кол-во просмотренных строк
-        counter_file = get_count_line(PATH_INDATA);     // получим колво строк
+        counter_file = get_count_line(PATH_INDATA);      // получим колво строк
         if (counter_watch != counter_file)
         {
             std::string line;
@@ -92,19 +80,19 @@ int main()
         {
             if (less)
             {
-                std::thread th(start_less);
+                std::thread th(start_less, std::ref(RUN_MAIN));
                 th.detach();
+                
                 RUN_PROGRAMM = true;
             }
             else if (tail)
             {
-                std::thread th(start_tail);
+                std::thread th(start_tail, std::ref(RUN_MAIN));
                 th.detach();
                 RUN_PROGRAMM = true;
             }
         }
     }
-    namespace fs = std::filesystem;
     fs::remove(PATH_OUTDATA);
     fs::remove(PATH_COUNTER);
 }
