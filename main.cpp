@@ -14,31 +14,8 @@ std::string PATH_INDATA = "/tmp/indata.txt";   // файл сторонней п
 std::string PATH_OUTDATA = "/tmp/outdata.txt"; ////файл нашей программы
 std::string PATH_COUNTER = "/tmp/counter.txt"; ////файл вспомогательный, хранит число строк от файла стронней программы
 
-void create_text_file()
-{
-    std::ofstream fout_counter;
-    fout_counter.open(PATH_COUNTER);
-    fout_counter << "0" << std::endl;
-    fout_counter.close();
 
-    std::ofstream fout_outdata;
-    fout_outdata.open(PATH_OUTDATA);
-    fout_outdata << "" << std::endl;
-    fout_outdata.close();
-}
 
-// int get_counter_watch(std::string& PATH_COUNTER) // узнаем сколько строк мы уже смотрели
-// {
-//     int counter_watch = 0;
-//     std::ifstream fin;
-//     fin.open(PATH_COUNTER);
-//     while (!fin.eof())
-//     {
-//         fin >> counter_watch;
-//     }
-//     fin.close();
-//     return counter_watch;
-// }
 int get_count_line() // получим количество строк в файле
 {
     int count_line = 0;
@@ -63,7 +40,7 @@ void start_tail() // запустим tail
 
 int main()
 {
-    create_text_file();
+    create_text_file(PATH_COUNTER, PATH_OUTDATA);
     int counter_watch, counter_file;
     char user_answer;
     bool tail = false, less = false;
