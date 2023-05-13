@@ -4,6 +4,7 @@ project(test_work)
 
 add_executable(test_work 
     main.cpp
+    func.cpp
 )
 set(CMAKE_CXX_FLAGS "-pthread")
 set_target_properties(test_work PROPERTIES

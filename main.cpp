@@ -4,6 +4,8 @@
 #include <filesystem>
 #include <unistd.h>
 
+#include"func.h"
+
 // знаю что так плохо, но мне кажется для этой программы так норм :)
 
 bool RUN_MAIN = true;                          // основной цикл программы
@@ -25,18 +27,18 @@ void create_text_file()
     fout_outdata.close();
 }
 
-int get_counter_watch() // узнаем сколько строк мы уже смотрели
-{
-    int counter_watch = 0;
-    std::ifstream fin;
-    fin.open(PATH_COUNTER);
-    while (!fin.eof())
-    {
-        fin >> counter_watch;
-    }
-    fin.close();
-    return counter_watch;
-}
+// int get_counter_watch(std::string& PATH_COUNTER) // узнаем сколько строк мы уже смотрели
+// {
+//     int counter_watch = 0;
+//     std::ifstream fin;
+//     fin.open(PATH_COUNTER);
+//     while (!fin.eof())
+//     {
+//         fin >> counter_watch;
+//     }
+//     fin.close();
+//     return counter_watch;
+// }
 int get_count_line() // получим количество строк в файле
 {
     int count_line = 0;
@@ -93,7 +95,7 @@ int main()
     }
     while (RUN_MAIN)
     {
-        counter_watch = get_counter_watch(); // получим кол-во просмотренных строк
+        counter_watch = get_counter_watch(PATH_COUNTER); // получим кол-во просмотренных строк
         counter_file = get_count_line();     // получим колво строк
         if (counter_watch != counter_file)
         {
