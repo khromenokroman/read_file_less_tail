@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include<fstream>
+#include<filesystem>
 
 int get_counter_watch(const std::string &path) // узнаем сколько строк мы уже смотрели
 {
@@ -37,4 +38,12 @@ int get_count_line(const std::string &path_indata) // получим колич�
     while (getline(file, line))
         ++count_line;
     return count_line;
+}
+
+
+void remove_file(const std::string &path_counter, const std::string &path_outdata)
+{
+    namespace fs = std::filesystem;
+    fs::remove(path_outdata);
+    fs::remove(path_counter);
 }

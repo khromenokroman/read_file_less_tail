@@ -7,25 +7,23 @@
 #include "file.h"
 #include "system.h"
 
-// пока что есть косяки например надо проверять есть ли файл, желательно избавиться от глобальных переменных, решаю...
-
-// знаю что так плохо, но мне кажется для этой программы так норм :)
-
-bool RUN_MAIN = true;                          // основной цикл программы
-bool RUN_PROGRAMM = false;                     // понимать что запушена программа
-std::string PATH_INDATA = "/tmp/indata.txt";   // файл сторонней программы
-std::string PATH_OUTDATA = "/tmp/outdata.txt"; ////файл нашей программы
-std::string PATH_COUNTER = "/tmp/counter.txt"; ////файл вспомогательный, хранит число строк от файла стронней программы
+// пока что есть косяки например надо проверять есть ли файл
 
 int main()
 {
-    namespace fs = std::filesystem;
-    fs::remove(PATH_OUTDATA);
-    fs::remove(PATH_COUNTER);
-    create_text_file(PATH_COUNTER, PATH_OUTDATA);
+    bool RUN_MAIN = true;                          // основной цикл программы
+    bool RUN_PROGRAMM = false;                     // понимать что запушена программа
+    std::string PATH_INDATA = "/tmp/indata.txt";   // файл сторонней программы
+    std::string PATH_OUTDATA = "/tmp/outdata.txt"; // файл нашей программы
+    std::string PATH_COUNTER = "/tmp/counter.txt"; // файл вспомогательный, хранит число строк от файла стронней программы
+
+    remove_file(PATH_COUNTER, PATH_OUTDATA);      // удалим наши файлы
+    create_text_file(PATH_COUNTER, PATH_OUTDATA); // создаем наши фалы
+
     int counter_watch, counter_file;
     char user_answer;
     bool tail = false, less = false;
+
     while (true)
     {
         std::system("clear"); // небольшое меню с чем работать, не совсем понял задание, поэтому сделал так
@@ -82,7 +80,6 @@ int main()
             {
                 std::thread th(start_less, std::ref(RUN_MAIN));
                 th.detach();
-                
                 RUN_PROGRAMM = true;
             }
             else if (tail)
@@ -93,6 +90,5 @@ int main()
             }
         }
     }
-    fs::remove(PATH_OUTDATA);
-    fs::remove(PATH_COUNTER);
+    remove_file(PATH_COUNTER, PATH_OUTDATA); // удалим наши файлы
 }
